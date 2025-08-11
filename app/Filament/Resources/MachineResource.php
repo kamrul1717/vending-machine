@@ -44,8 +44,9 @@ class MachineResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('ip_address')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label('Active')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

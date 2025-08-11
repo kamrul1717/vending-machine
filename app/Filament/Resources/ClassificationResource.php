@@ -70,7 +70,7 @@ class ClassificationResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ClassificationLimitsRelationManager::class,
         ];
     }
 
