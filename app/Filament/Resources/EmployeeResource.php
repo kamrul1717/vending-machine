@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\EmployeeResource\Pages;
+use App\Filament\Resources\EmployeeResource\Pages\PurchaseHistory;
 use App\Filament\Resources\EmployeeResource\RelationManagers;
 use App\Models\Employee;
 use Filament\Forms;
@@ -28,9 +29,9 @@ class EmployeeResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email(),
                 Forms\Components\TextInput::make('employee_code'),
-                Forms\Components\TextInput::make('classification_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('classification_id')
+                    ->relationship('classification', 'name')
+                    ->required(),
             ]);
     }
 
@@ -44,9 +45,13 @@ class EmployeeResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('employee_code')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('classification_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('cards.card_number')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('current_balance')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('classification.name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -64,7 +69,14 @@ class EmployeeResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('purchaseHistory')
+                    ->label('Purchase History')
+                    ->url(fn ($record) => Pages\PurchaseHistory::getUrl(['record' => $record->id]))
+                    ->icon('heroicon-o-archive-box')
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -86,6 +98,7 @@ class EmployeeResource extends Resource
             'index' => Pages\ListEmployees::route('/'),
             'create' => Pages\CreateEmployee::route('/create'),
             'edit' => Pages\EditEmployee::route('/{record}/edit'),
+            'purchase-history' => Pages\PurchaseHistory::route('/{record}/purchase-history'),
         ];
     }
 }

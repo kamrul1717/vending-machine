@@ -24,12 +24,12 @@ class SlotResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('machine_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('product_category_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('machine_id')
+                    ->relationship('machine', 'name')
+                    ->required(),
+                Forms\Components\Select::make('product_category_id')
+                    ->relationship('productCategory', 'name')
+                    ->required(),
                 Forms\Components\TextInput::make('slot_number')
                     ->required()
                     ->numeric(),
@@ -48,12 +48,10 @@ class SlotResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('machine_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('product_category_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('machine.name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('productCategory.name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('slot_number')
                     ->numeric()
                     ->sortable(),
