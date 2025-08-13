@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('product_category_id')->constrained('product_categories')->cascadeOnDelete();
             $table->integer('points_deducted');
             $table->timestamp('transaction_time');
-            $table->enum('status', ['pending', 'completed', 'failed']); // Adjust enum values if needed
+            $table->enum('status', ['success', 'failure']);
             $table->text('failure_reason')->nullable();
             $table->timestamps();
         });

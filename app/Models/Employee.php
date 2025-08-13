@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
@@ -17,17 +20,17 @@ class Employee extends Model
         'classification_id',
     ];
     
-    public function classification()
+    public function classification(): BelongsTo
     {
         return $this->belongsTo(Classification::class);
     }
 
-    public function cards()
+    public function cards(): HasMany
     {
         return $this->hasMany(Card::class);
     }
 
-    public function transactions()
+    public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
@@ -36,4 +39,28 @@ class Employee extends Model
     {
         return 1000;
     }
+
+    public function latestActiveCard(): HasOne
+    {
+        return $this->hasOne(Card::class)
+                ->where('is_active', true)
+                ->whereNull('expired_date')
+                ->latestOfMany();        
+    }
+
+    public function employeeBalance(): HasOne
+    {
+        return $this->hasOne(EmployeeBalance::class);
+    }
+
+    public function employeeDailyProductLimits(): HasMany
+    {
+        return $this->hasMany(EmployeeDailyProductLimit::class);
+    }
+
+    public function recharges()
+    {
+        return $this->hasMany(BalanceRechargeLog::class);
+    }
+
 }

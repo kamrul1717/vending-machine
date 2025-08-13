@@ -45,7 +45,7 @@ class EmployeeResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('employee_code')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('cards.card_number')
+                Tables\Columns\TextColumn::make('latestActiveCard.card_number')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('current_balance')
                     ->sortable()

@@ -30,22 +30,19 @@ class VendingMachineSeeder extends Seeder
 
         // 3. Classifications
         DB::table('classifications')->insert([
-            ['name' => 'Regular', 'daily_point_limit' => 100, 'created_at' => $now, 'updated_at' => $now],
-            ['name' => 'Premium', 'daily_point_limit' => 200, 'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Manager', 'daily_point_limit' => 100, 'created_at' => $now, 'updated_at' => $now],
         ]);
 
         // 4. Classification Limits
         DB::table('classification_limits')->insert([
             ['classification_id' => 1, 'product_category_id' => 1, 'daily_limit' => 3, 'created_at' => $now, 'updated_at' => $now],
             ['classification_id' => 1, 'product_category_id' => 2, 'daily_limit' => 2, 'created_at' => $now, 'updated_at' => $now],
-            ['classification_id' => 2, 'product_category_id' => 1, 'daily_limit' => 5, 'created_at' => $now, 'updated_at' => $now],
-            ['classification_id' => 2, 'product_category_id' => 2, 'daily_limit' => 4, 'created_at' => $now, 'updated_at' => $now],
         ]);
 
         // 5. Employees
         DB::table('employees')->insert([
             ['full_name' => 'John Doe', 'email' => 'john@example.com', 'employee_code' => 'EMP001', 'classification_id' => 1, 'created_at' => $now, 'updated_at' => $now],
-            ['full_name' => 'Jane Smith', 'email' => 'jane@example.com', 'employee_code' => 'EMP002', 'classification_id' => 2, 'created_at' => $now, 'updated_at' => $now],
+            ['full_name' => 'Jane Smith', 'email' => 'jane@example.com', 'employee_code' => 'EMP002', 'classification_id' => 1, 'created_at' => $now, 'updated_at' => $now],
         ]);
 
         // 6. Employee Balances
@@ -75,8 +72,8 @@ class VendingMachineSeeder extends Seeder
 
         // 10. Cards
         DB::table('cards')->insert([
-            ['card_number' => 'CARD1001', 'employee_id' => 1, 'is_active' => 1, 'issued_date' => $now, 'expired_date' => $now->copy()->addYear(), 'notes' => null, 'created_at' => $now, 'updated_at' => $now],
-            ['card_number' => 'CARD1002', 'employee_id' => 2, 'is_active' => 1, 'issued_date' => $now, 'expired_date' => $now->copy()->addYear(), 'notes' => null, 'created_at' => $now, 'updated_at' => $now],
+            ['card_number' => 'CARD1001', 'employee_id' => 1, 'is_active' => 1, 'issued_date' => $now, 'expired_date' => null, 'notes' => null, 'created_at' => $now, 'updated_at' => $now],
+            ['card_number' => 'CARD1002', 'employee_id' => 2, 'is_active' => 1, 'issued_date' => $now, 'expired_date' => null, 'notes' => null, 'created_at' => $now, 'updated_at' => $now],
         ]);
 
         // 11. Employee Daily Product Limits
@@ -95,7 +92,7 @@ class VendingMachineSeeder extends Seeder
                 'product_category_id' => 1,
                 'points_deducted' => 10,
                 'transaction_time' => $now,
-                'status' => 'completed',
+                'status' => 'success',
                 'failure_reason' => null,
                 'created_at' => $now,
                 'updated_at' => $now
@@ -108,7 +105,7 @@ class VendingMachineSeeder extends Seeder
                 'product_category_id' => 1,
                 'points_deducted' => 12,
                 'transaction_time' => $now,
-                'status' => 'completed',
+                'status' => 'success',
                 'failure_reason' => null,
                 'created_at' => $now,
                 'updated_at' => $now
